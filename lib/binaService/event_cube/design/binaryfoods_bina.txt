@@ -1,0 +1,66 @@
+ 
+ Sales functions and definitions.
+Finance(generate_invoice_with_link_to_pay, make_payment)
+ Sales(list_offering, order offering, update_order,)
+ Order(order_details) => Order_Object 
+    [Order objects have functions that updates states within (from its root).
+    This way Order can be a Sales Supervised GanServer for all transactions for the Order]
+    e.g Order.update(delevery_status: event_cube_object_or_data_field)
+    Order.response(OrderResponse{:status\\0|1, :from_actor\\UUID, :datetime }) // Order.response = ACCEPTED
+
+    Object.assign(Order.response, ACCEPTED) //BINA ASSIGNMENT MANAGER 
+    _first ensure Order.response and ACCEPTED are the same data type. 
+    Responsible for single point of entry into the system so that topics can be captured.
+
+defmodule Bina.OM do
+
+alias Bina.OM.EntityValue
+alias Bina.OM.Entity
+
+so instead of writing OM.assign(Order, response, response_value)
+API user is able to use 
+def assign(entity, entity_value)
+    
+
+end
+
+end
+
+    Order objects
+
+    Realtime TV screen of display of every event and their metrics blinking Green,Red,Blue,Yellow for different reason indicator
+    Showcase at RioDisu(not now after funding to build it) on live screen to prospects (business owners that can agree to sign up to share information that way. having their own community network..like Groups)
+
+    Websocket()
+
+
+
+
+
+iex(12)> String.replace("Sama", "a", "e")
+"Seme"
+iex(13)> f = fn x,y -> String.replace(x, y, ".") end    
+#Function<13.126501267/2 in :erl_eval.expr/5>
+iex(14)> f.("Sama", "a")
+"S.m."
+iex(15)> %{event_handler: fn x,y -> String.replace(x, y, ".") end , title: "replace"}
+%{
+  event_handler: #Function<13.126501267/2 in :erl_eval.expr/5>,
+  title: "replace"
+}
+iex(16)> atom = %{event_handler: fn x,y -> String.replace(x, y, ".") end , title: "replace"}
+%{
+  event_handler: #Function<13.126501267/2 in :erl_eval.expr/5>,
+  title: "replace"
+}
+iex(17)> atom = %{event_handler: fn x,y -> String.replace(x, y, ".") end , title: "replace", payload: {x,y}}
+** (CompileError) iex:17: undefined function x/0
+    (stdlib) lists.erl:1354: :lists.mapfoldl/3
+    (stdlib) lists.erl:1354: :lists.mapfoldl/3
+    (stdlib) lists.erl:1355: :lists.mapfoldl/3
+iex(17)> atom = %{event_handler: fn x,y -> String.replace(x, y, ".") end , title: "replace", payload: {:x,:y}}
+%{
+  event_handler: #Function<13.126501267/2 in :erl_eval.expr/5>,
+  payload: {:x, :y},
+  title: "replace"
+}

@@ -1,0 +1,93 @@
+on one node  iex --sname robin
+on another node iex --sname barry
+
+siso@panda:~$ iex --sname barry 
+Erlang/OTP 22 [erts-10.6] [source] [64-bit] [smp:2:2] [ds:2:2:10] [async-threads:1] [hipe]
+
+Interactive Elixir (1.9.4) - press Ctrl+C to exit (type h() ENTER for help)
+iex(barry@panda)1> Node.list
+[:robin@panda]
+iex(barry@panda)2> defmodule Hello do
+...(barry@panda)2> def world do
+...(barry@panda)2> IO.puts "Hello Word"
+...(barry@panda)2> end
+...(barry@panda)2> end
+{:module, Hello,
+ <<70, 79, 82, 49, 0, 0, 4, 84, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 140,
+   0, 0, 0, 15, 12, 69, 108, 105, 120, 105, 114, 46, 72, 101, 108, 108, 111, 8,
+   95, 95, 105, 110, 102, 111, 95, 95, 7, ...>>, {:world, 0}}
+iex(barry@panda)3> Hello.world
+Hello Word
+:ok
+iex(barry@panda)4> Kernel.spawn(Hello.world)
+Hello Word
+** (ArgumentError) argument error
+    :erlang.spawn(:ok)
+iex(barry@panda)4> Kernel.spawn(Hello, :world, [])
+Hello Word
+#PID<0.127.0>
+iex(barry@panda)5> Kernel.spawn(Hello, :fun, [])  
+#PID<0.129.0>
+iex(barry@panda)6> 
+11:17:34.978 [error] Process #PID<0.129.0> on node :barry@panda raised an exception
+** (UndefinedFunctionError) function Hello.fun/0 is undefined or private 
+    Hello.fun()
+iex(barry@panda)6> cluster = [Node | Node.list]   
+[Node, :robin@panda]
+iex(barry@panda)7> cluster = [node | Node.list]
+[:barry@panda, :robin@panda]
+iex(barry@panda)8>  :rpc.multicall(cluster, Hello, :world, [])
+Hello Word
+{[
+   :ok,
+   {:badrpc,
+    {:EXIT,
+     {:undef,
+      [
+        {Hello, :world, [], []},
+        {:rpc, :"-handle_call_call/6-fun-0-", 5, [file: 'rpc.erl', line: 197]}
+      ]}}}
+ ], []}
+iex(barry@panda)9>  :rpc.multicall(cluster, Hello, :world, [])
+Hello Word
+Hello world at robin
+{[:ok, :ok], []}
+iex(barry@panda)10> 
+
+
+
+=======================
+SECOND NODE ROBIN
+=======================
+
+cluster = [node | Node.list]
+[:robin@panda, :barry@panda]
+iex(robin@panda)6> :rcp.multicall(cluster, Hello, :world, [])
+** (UndefinedFunctionError) function :rcp.multicall/4 is undefined (module :rcp is not available)
+    :rcp.multicall([:robin@panda, :barry@panda], Hello, :world, [])
+iex(robin@panda)6> :rpc.multicall(cluster, Hello, :world, [])
+Hello Word
+{[
+   {:badrpc,
+    {:EXIT,
+     {:undef,
+      [
+        {Hello, :world, [], []},
+        {:rpc, :"-handle_call_call/6-fun-0-", 5, [file: 'rpc.erl', line: 197]}
+      ]}}},
+   :ok
+ ], []}
+iex(robin@panda)7> defmodule Hello do
+...(robin@panda)7> def world do
+...(robin@panda)7> IO.puts "Hello world at robin"
+...(robin@panda)7> end
+...(robin@panda)7> end
+{:module, Hello,
+ <<70, 79, 82, 49, 0, 0, 4, 100, 66, 69, 65, 77, 65, 116, 85, 56, 0, 0, 0, 140,
+   0, 0, 0, 15, 12, 69, 108, 105, 120, 105, 114, 46, 72, 101, 108, 108, 111, 8,
+   95, 95, 105, 110, 102, 111, 95, 95, 7, ...>>, {:world, 0}}
+iex(robin@panda)8> :rpc.multicall(cluster, Hello, :world, [])
+Hello world at robin
+Hello Word
+{[:ok, :ok], []}
+iex(robin@panda)9> 

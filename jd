@@ -1,0 +1,17 @@
+[0;1;31m●[0m bluetooth.service - Bluetooth service
+   Loaded: loaded (/lib/systemd/system/bluetooth.service; enabled; vendor preset: enabled)
+   Active: [0;1;31mfailed[0m (Result: core-dump) since Wed 2020-01-08 07:36:25 WAT; 12min ago
+     Docs: man:bluetoothd(8)
+ Main PID: 777 (code=dumped, signal=SEGV)
+   Status: "Running"
+
+Jan 08 07:30:34 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mconnect error: Connection refused (111)[0m
+Jan 08 07:35:31 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mconnect error: Connection refused (111)[0m
+Jan 08 07:36:14 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mconnect error: Connection refused (111)[0m
+Jan 08 07:36:23 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mFailed to set local name: Not Powered (0x0f)[0m
+Jan 08 07:36:23 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mF4:4E:FD:AF:B8:0F: error updating services: Software caused connection abort (103)[0m
+Jan 08 07:36:23 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mFailed to set mode: Blocked through rfkill (0x12)[0m
+Jan 08 07:36:23 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mFailed to set mode: Blocked through rfkill (0x12)[0m
+Jan 08 07:36:23 panda bluetoothd[777]: [0;1;31m[0;1;39m[0;1;31mFailed to set mode: Blocked through rfkill (0x12)[0m
+Jan 08 07:36:25 panda systemd[1]: [0;1;39m[0;1;31m[0;1;39mbluetooth.service: Main process exited, code=dumped, status=11/SEGV[0m
+Jan 08 07:36:25 panda systemd[1]: [0;1;39m[0;1;31m[0;1;39mbluetooth.service: Failed with result 'core-dump'.[0m

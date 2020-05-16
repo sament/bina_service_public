@@ -1,0 +1,16 @@
+Gnutella is an early P2P communication mechanism. A Gnutella node needs to know the
+location of at least one other Gnutella node in order to be able to work at all. Therefore
+a Gnutella node is initialised with a set of working nodes. A Gnutella node is connected
+to its working set and each connected node has its own working set of Gnutella nodes.
+No Gnutella node needs to have the same working set as another Gnutella node. This
+way of connecting creates a mesh of connected nodes, see figure 2.1.
+The protocol uses flooding to find desired data among connected nodes. A node
+A wants to get some data from the cloud so A makes a request for this data from all
+its connected nodes and each of these nodes will make requests to all of their connected
+nodes. In order to not letting the flooding actually flood the network forever each request
+is given a Time To Live (TTL) which is an integer number that is decremented at each
+node it reaches. A request is not further replicated from a node when the TTL for a
+request reaches zero. When data is found inside the Gnutella network, the data is sent
+directly to the requesting node.
+[A Peer-To-Peer based chat system ERLANG.pdf]
+/media/siso/EA44355C44352D27/baaaackkkuppp/DEV

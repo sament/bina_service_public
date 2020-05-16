@@ -1,0 +1,14 @@
+Working with dependencies
+Depending on third-party libraries is an important feature. As soon as you start
+developing more complicated projects, you’ll probably want to use various librar-
+ies, such as web frameworks, the JSON parser, and database drivers, to name a few
+examples. Such libraries can simplify various side concerns, prevent you from going
+down too many rabbit holes, and allow you to focus on the core challenges of your
+system.
+For example, in the current implementation of the to-do system, you maintain a
+small pool of database workers, which allows you to have controlled parallelism of data-
+base operations. You implemented this pool completely from scratch back in chapter
+7. But as it happens, managing a pool of processes is a frequent pattern in Elixir and
+Erlang, so a couple of third-party libraries offer a solution to this challenge. In this
+chapter, you’ll replace your naive implementation of the process pool with a proven
+and battle-tested process pool library.

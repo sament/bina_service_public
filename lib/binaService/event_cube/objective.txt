@@ -1,0 +1,73 @@
+
+
+synchronous commands [GenServer.call, Kernel.send/2 -> handle_info]
+assynchronous commands [GenServer.cast/2]
+
+
+e.g
+
+A GenServer for handling state and notification for a domain. 
+The following example is a GenServer that handles the basic functions of Account domain that needs notification within the Bina domain
+
+defmodule Bina.EventCube.Account do
+    use GenServer
+
+    def init(:ok) do
+        {:ok, %{balance: 0}}
+    end
+
+    ...
+end
+
+
+  The Account Action Atom. A live running process that handles commands for a domain.
+  Can be called by
+
+  BinaService.ScheduleManager.create_schedule(Account.open, BinaService.Period)
+
+  %BinaService.Schedule{%command{}, %period{}, reply: %{}:}// a %{} map so that it can fit any struct/map returned by the function..including references.
+At the core this is a reference to a task Scheduled. one shedule per function. 
+TaskList can therefroe be scheduled too at predefined time.
+e.g transfer amounts fetched from a database system(or file) to execute at specified time in the future to 10 people
+
+ RISK:NOT type SAFE. Not good for calculations. best used for simply routing data/messages
+
+  Business logic for operating a Finance.Account domain [
+    start_link(account_owner) > pid
+    open > %account{} *publishes account_opened event to dispatcher
+    close > :ok or {:error, reason}
+    deposit > :ok or {:error, reason}*publishes account_deposited event to dispatcher
+    get_balance > float e.g 50.0
+
+    Therefore a reference to EventCube.Domain is when you want to
+    establish a communication contract: To start run a task at a scheduled time.
+    When all batched tasked %TaskList{} in an execution context(e.g account opening commands in the future mixed with placing orders)
+    super TaskList is a map of TaskLists e.g %{%TaskList{}, %TaskList{}...} this can form the base of Smart Contract on Bina. 
+    But such implimentation will need a GenServer for handling state and notification for a domain.
+
+Arina...if you like data structure we are for you. This is marketing material to train people. But i am too busy to do that right now aint i?
+Let it be BinaryFoods organising the event. Have a screen shot of photo like that and invite JavaScript developers who wants to learn Elixir to enroll.
+We simply sell content to them. We have to work on the experience. It can't be poor and risk our business.
+
+That phot that Imeh(Nancy's friend) liked shoukd be used in my speaking enegagement as the first image that pops to audience. Always flash BinaryFoods
+Get customized TShirts with a symbol.. just our logo. No need for name.
+
+Speak to market leader of computer village . Have a meeting. Propose BinaryFoods and showcase how they genetrate more revenues from food sellers through the BinaryFood System.
+We are a channels. Organisations want breakthrough. We need to sell breakthrough and build breakthrough technology. 
+Skilled team members and bigger funds. But before we get to that stage of getting bigger investors(where you can choose to sell shares) 
+
+We need to whocase workers we understand organisational data. We sell automation and breakthrough technology to organisations. 
+It's easier to sell Bina to firms than going straight to mass adoption. Start with a community. A group of closely cohesive organisations
+
+Hotels and their food vendors. We believe you can be instrumental in  We believe you can h Access to contact is key 
+
+
+
+
+  Inventory.entries => %{command, item_payload, timestamp} e.g %{command:checkin, uuid_of_item, 878378928}
+
+  so that Inventory.entries[:command: checkin] to return all checkin events?
+
+  entries =[%{command: :checkin, payload: id = "YHpUIOMvN7Ms0KJWH", location: self(), timestamp: DateTime.utc_now, reply: %{command: :checkin, id: id}}, %{command: :checkout, payload: id = "YHpUIOMvN7Ms0KJWH", location: self(), timestamp: DateTime.utc_now, reply: %{command: :checkout, id: id}},  %{command: :checkin, payload: id = "YHpUIOMvN7Ms0KJWH", location: self(), timestamp: DateTime.utc_now, reply: %{command: :checkin, id: id}}]
+
+

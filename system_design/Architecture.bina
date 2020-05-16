@@ -1,0 +1,116 @@
+Proposal -
+
+Website for booking Session(Service) more details than mobile app
+Payment Platform - Client can pay. Book and Pay on Website or In Saloon
+
+
+Loyalty programme: booking confirmed - loyalty goes up per completion of service-
+Gift Card -
+Someone who pays online _ someone can pay into virtual/wallet account
+
+Mobile App - cost
+
+SERVICE BOOKING ARCHITECTURE
+BY: SAMUEL ISO (samdoxiso@gmail.com)
+COMPANY: Samsojac Concepts Services Nigeria Ltd | Pandaville Labs
+
+
+
+ACTORS
+ServiceProvider
+Consumers
+Admin
+
+
+ENTITIES
+Consumer{user_uuid, name}  <=  [Service.Consumers]
+Provider|ServiceProvider {user_uuid, name}  <=  [Service.Providers]
+Services {owner_uuid, name, %tags{}, description, %details{description,thumbnail...}}   <=  [Service]
+Orders {uuid, %consumer{}, created_at, %when(from_date, to_date), %where{%address{}}, %order_events[timestamp, %status]}
+
+Invoice{uuid,order_uuid, total, %line_items[], %payment_events[%payment{},timestamp, %status] }
+Payments{uuid, invoice_uuid, from_account_uuid, to_account_uuid}
+Accounts{uuid, class_account_uuid, name, opening_balance, current_balance}
+
+User {uuid, handle, %login_details{}, created_at}  <=  [Identity.Security]
+Profile {uuid, %profile_details{%profile_photos{}, email, phone, %home_address{}, %scoring{loyalty}}}   <=  [Identity.Profiles]
+
+
+COMMANDS {_transaction_id, timestamp} in every command internally used
+
+login{%login_details{}, %login_method}
+register_user {%user{}}
+create_user_account{%user, %account} => %Account{}
+profile_user{%user, %profile{}}
+create_service{%provider, %service{}} ==>  %Order{}
+Update_Service {
+                request_service{%service, %requests}
+                accept_service{%serviceprovider, %order_event{ACCEPTED}}
+                reject_service{%serviceprovider, %order_event{REJECTED}}
+                cancel_service{%serviceprovider, %order_event{CANCELLED}}
+                confirm_service{%serviceprovider, %order_event{CONFIRMED}}
+
+              } ==> %Order{}  #New Order state
+
+generate_invoice{%order, total, %line_items[] %} ==> %Invoice{}
+pay_invoice{%invoice, amount} ==> %Invoice{%payment_events{%payment{%from_consumer, %to_provider, amount}, PARTIAL/FULL}}
+
+
+
+
+
+
+
+DOMAINS[CONTEXT]  (sub-domains)
+Identity (security, profile)
+Service  (service_requests)
+Payment  (billing, gift_card, )
+Rewards  (loyalty,)
+
+
+
+
+
+ACTIVITIES/COMMANDS
+Registration: marks the person as a basic user (default) or service_provider
+Authentication&Authorization
+Sales
+Payments
+
+
+EVENTS
+order_events
+invoice_events
+
+
+
+
+
+
+GenServers scheduled to execute a function every xmins
+Bests that our Servers uses the UTC timezone 
+
+
+
+send_sms_task = function_to_send_sms()
+Bina.Task.Schedule(send_sms_task, time_period)
+
+
+DateTime module require a time zone database. By default, it uses the default time zone database returned by
+ Calendar.get_time_zone_database/0, which defaults to 
+ Calendar.UTCOnlyTimeZoneDatabase which only handles "Etc/UTC" datetimes and returns {:error, :utc_only_time_zone_database} for any other time zone.
+
+
+Bina.TimePeriod %{:start => DateTime.utc_now, :finish => nil}
+
+iex(6)> DateTime.utc_now
+~U[2020-01-04 15:19:17.296475Z]
+iex(7)> period = %{:start => DateTime.utc_now, :finish => nil}
+%{finish: nil, start: ~U[2020-01-04 15:22:39.531306Z]}
+iex(8)> period.start
+~U[2020-01-04 15:22:39.531306Z]
+iex(9)> 
+
+
+send_sms_task = function_to_send_sms()
+Bina.Task.Schedule(send_sms_task, time_period)

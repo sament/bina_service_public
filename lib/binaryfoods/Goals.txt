@@ -1,0 +1,49 @@
+BinaryFoods
+
+Makes it easy to stay in-touch with your customers and partners. The business of business communication.
+Commerce communication.
+M
+In-touch: 
+Customer Place Order so Vendor can Process order
+Vendor Post Menu so Client can view Menu
+Vendor Post Recipe so Clients can View Recipes
+
+Menu belongs to Zone (geographic tag,[long1-long2, lat1-lat2])
+
+Samsojac Concepts Services (Nig) Ltd
+
+RC 1328039
+
+
+
+
+=======================
+BINA IDENTITY CONTEXT
+
+    [EventCube coded]
+
+    -Bina.Identity.Profession.get_experience("Sam", "Elixir") => 3 (Sam has 3 years experience in ELixir)
+    Developers and business use the APi to get data of people use their email/phone number.
+
+    But only people who agreed to join the community. This will then authorize sourcind data from Google, LinkedIn, FaceBook, GitHub, P to   
+
+
+=======================
+Remember solve a problem in the step for the users.
+Sell HOPE to office workers. 
+Take 
+
+====================================
+Impliment the scenario below in Bina to be able to solve the producer-supplier specification requirement at scale.
+
+Vivacious  (clothing that delights)
+Founder, Blesssing Bassey Crysanthus 
+
+Clothing that matches.. people provide their spec, {burst, waist, height, colors:[color_1..color_n], weight}
+vivacious matches you with designers/taylors that have that spec
+
+Chat with designer. Go through clothes photos [ Vendor is now a consumer..%Actor{state: :consumer||:provider} ]
+
+
+
+Afford a corporate car at month7
