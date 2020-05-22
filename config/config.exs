@@ -41,7 +41,7 @@ config :ex_twilio,
   # account_sid: System.get_env(“TWILIO_ACCOUNT_SID”),
   # auth_token: System.get_env(“TWILIO_AUTH_TOKEN”)
   account_sid: "ACad37fc3c115c79be9b73fc4f62535aef",
-  auth_token: "a01d273e0de51a9ef20eb2054f42caef"
+  auth_token: "_______$%÷345323"
 
 
 # Import environment specific config. This must remain at the bottom
